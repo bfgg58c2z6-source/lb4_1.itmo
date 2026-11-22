@@ -1,12 +1,12 @@
 from itertools import combinations
 
-# Предметы: обозначение -> (размер в ячейках, очки выживания)
+
 ITEMS = {
     'r': (3, 25),  # Винтовка
     'p': (2, 15),  # Пистолет
     'a': (2, 15),  # Боекомплект
     'm': (2, 20),  # Аптечка
-    'i': (1, 5),   # Ингалятор (обязателен при астме)
+    'i': (1, 5),   # Ингалятор 
     'k': (1, 15),  # Нож
     'x': (3, 20),  # Топор
     't': (1, 25),  # Оберег
@@ -24,7 +24,7 @@ def solve_knapsack(items, capacity, start_points, required_item=None):
     free_capacity = capacity
     other_items = []
 
-    # Сначала кладём обязательный предмет и уменьшаем свободное место
+   
     for code, (size, val) in items.items():
         if code == required_item:
             taken.append(code)
@@ -33,7 +33,7 @@ def solve_knapsack(items, capacity, start_points, required_item=None):
             other_items.append((code, size, val))
 
     n = len(other_items)
-    # Таблица DP с доп. строкой и столбцом нулей
+  
     dp = [[0] * (free_capacity + 1) for _ in range(n + 1)]
 
     for i in range(1, n + 1):
@@ -44,7 +44,7 @@ def solve_knapsack(items, capacity, start_points, required_item=None):
             else:
                 dp[i][w] = dp[i - 1][w]
 
-    # Обратный проход по таблице, чтобы узнать, какие предметы мы взяли
+ 
     w = free_capacity
     for i in range(n, 0, -1):
         if dp[i][w] != dp[i - 1][w]:
@@ -52,7 +52,6 @@ def solve_knapsack(items, capacity, start_points, required_item=None):
             taken.append(code)
             w -= size
 
-    # Итоговый счёт: старт + взятые - оставшиеся
     taken_points = sum(items[code][1] for code in taken)
     missed_points = total_points - taken_points
     final_score = start_points + taken_points - missed_points
@@ -61,7 +60,7 @@ def solve_knapsack(items, capacity, start_points, required_item=None):
 
 
 def print_inventory(taken, items, rows, cols):
-    # Сортируем по размеру по убыванию, чтобы предметы на 2 ячейки не разрывались по строкам
+  
     taken_sorted = sorted(taken, key=lambda code: items[code][0], reverse=True)
 
     cells = []
@@ -85,7 +84,6 @@ def find_all_positive(items, capacity, start_points, required_item=None):
     req_size, req_val = items[required_item] if required_item else (0, 0)
     results = []
 
-    # Перебираем все возможные комбинации оставшихся предметов
     for count in range(len(other_codes) + 1):
         for combo in combinations(other_codes, count):
             size = req_size + sum(items[c][0] for c in combo)
@@ -100,7 +98,7 @@ def find_all_positive(items, capacity, start_points, required_item=None):
 
 
 if __name__ == '__main__':
-    # --- Основное задание (Вариант 5: 2x4, астма, старт 20) ---
+
     rows, cols = 2, 4
     start_points = 20
     required = 'i'
@@ -114,7 +112,7 @@ if __name__ == '__main__':
     else:
         print(f'Положительного решения нет (максимум: {best_score})')
 
-    # --- Допзадание 1: инвентарь на 7 ячеек ---
+    #Допзадание 1: инвентарь на 7 ячеек
     print('\n--- Допзадание: 7 ячеек ---')
     items_7, score_7 = solve_knapsack(ITEMS, 7, start_points, required)
     if score_7 > 0:
@@ -122,7 +120,7 @@ if __name__ == '__main__':
     else:
         print(f'Решения нет. Максимально возможный счёт для 7 ячеек: {score_7} (набор: {items_7})')
 
-    # --- Допзадание 2: все комбинации с положительным счётом ---
+    #Допзадание 2: все комбинации с положительным счётом 
     print('\n--- Допзадание: все подходящие комбинации (8 ячеек) ---')
     all_solutions = find_all_positive(ITEMS, rows * cols, start_points, required)
     print(f'Всего найдено комбинаций: {len(all_solutions)}')
