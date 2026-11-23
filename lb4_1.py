@@ -53,27 +53,21 @@ def solve_knapsack(items, capacity, start_points, item0=None):
 
     return taken, final_score
 
+# Основное задание (8 ячеек, старт 20, обязателен 'i')
+best_items, best_score = solve_knapsack(ITEMS, 8, 20, 'i')
 
-rows, cols = 2, 4
-start_points = 20
-required = 'i'
-
-# Основное задание (вариант 5)
-best_items, best_score = solve_knapsack(ITEMS, rows * cols, start_points, required)
 cells = []
 for code in best_items:
     size = ITEMS[code][0]
     for j in range(size):
         cells.append('[' + code + ']')
 
-print(cells[0] + ',' + cells[1] + ',' + cells[2] + ',' + cells[3])
-print(cells[4] + ',' + cells[5] + ',' + cells[6] + ',' + cells[7])
-
+print(cells[0], cells[1], cells[2], cells[3], sep=',')
+print(cells[4], cells[5], cells[6], cells[7], sep=',')
 print('Итоговые очки выживания:', best_score)
 
-# Допзадание: 7 ячеек
-items_7, score_7 = solve_knapsack(ITEMS, 7, start_points, required)
+# Допзадание (7 ячеек)
+items_7, score_7 = solve_knapsack(ITEMS, 7, 20, 'i')
 print('Максимум очков для 7 ячеек:', score_7)
-
 
 
