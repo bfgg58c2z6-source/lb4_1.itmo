@@ -55,10 +55,8 @@ def solve_knapsack(items, capacity, start_points, item0=None):
 
 
 def print_inventory(taken, items, rows, cols):
-    taken_sorted = sorted(taken, key=lambda code: items[code][0], reverse=True)
-
     cells = []
-    for code in taken_sorted:
+    for code in taken:
         size = items[code][0]
         for _ in range(size):
             cells.append(f'[{code}]')
@@ -69,7 +67,6 @@ def print_inventory(taken, items, rows, cols):
     for r in range(rows):
         row = cells[r * cols:(r + 1) * cols]
         print(','.join(row))
-
 
 if __name__ == '__main__':
     rows, cols = 2, 4
@@ -92,4 +89,5 @@ if __name__ == '__main__':
         print(f'Решение найдено: {items_7}, очки: {score_7}')
     else:
         print(f'Решения нет. Максимально возможный счёт для 7 ячеек: {score_7} (набор: {items_7})')
+
 
