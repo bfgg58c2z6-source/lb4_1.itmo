@@ -54,27 +54,21 @@ def solve_knapsack(items, capacity, start_points, item0=None):
     return taken, final_score
 
 
-def print_inventory(taken, items, rows, cols):
-    cells = []
-    for code in taken:
-        size = items[code][0]
-        for _ in range(size):
-            cells.append(f'[{code}]')
-
-    while len(cells) < rows * cols:
-        cells.append('[ ]')
-
-    for r in range(rows):
-        row = cells[r * cols:(r + 1) * cols]
-        print(','.join(row))
-        
 rows, cols = 2, 4
 start_points = 20
 required = 'i'
 
 # Основное задание (вариант 5)
 best_items, best_score = solve_knapsack(ITEMS, rows * cols, start_points, required)
-print_inventory(best_items, ITEMS, rows, cols)
+cells = []
+for code in best_items:
+    size = ITEMS[code][0]
+    for j in range(size):
+        cells.append('[' + code + ']')
+
+print(cells[0] + ',' + cells[1] + ',' + cells[2] + ',' + cells[3])
+print(cells[4] + ',' + cells[5] + ',' + cells[6] + ',' + cells[7])
+
 print('Итоговые очки выживания:', best_score)
 
 # Допзадание: 7 ячеек
