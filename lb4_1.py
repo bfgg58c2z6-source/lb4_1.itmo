@@ -67,27 +67,19 @@ def print_inventory(taken, items, rows, cols):
     for r in range(rows):
         row = cells[r * cols:(r + 1) * cols]
         print(','.join(row))
+        
+rows, cols = 2, 4
+start_points = 20
+required = 'i'
 
-if __name__ == '__main__':
-    rows, cols = 2, 4
-    start_points = 20
-    required = 'i'
+# Основное задание (вариант 5)
+best_items, best_score = solve_knapsack(ITEMS, rows * cols, start_points, required)
+print_inventory(best_items, ITEMS, rows, cols)
+print('Итоговые очки выживания:', best_score)
 
-    best_items, best_score = solve_knapsack(ITEMS, rows * cols, start_points, required)
+# Допзадание: 7 ячеек
+items_7, score_7 = solve_knapsack(ITEMS, 7, start_points, required)
+print('Максимум очков для 7 ячеек:', score_7)
 
-    if best_score > 0:
-        print('Оптимальный инвентарь (Вариант 5):')
-        print_inventory(best_items, ITEMS, rows, cols)
-        print(f'\nИтоговые очки выживания: {best_score}')
-    else:
-        print(f'Положительного решения нет (максимум: {best_score})')
-
-    # Допзадание 1: инвентарь на 7 ячеек
-    print('\nдопзадание: 7 ячеек')
-    items_7, score_7 = solve_knapsack(ITEMS, 7, start_points, required)
-    if score_7 > 0:
-        print(f'Решение найдено: {items_7}, очки: {score_7}')
-    else:
-        print(f'Решения нет. Максимально возможный счёт для 7 ячеек: {score_7} (набор: {items_7})')
 
 
